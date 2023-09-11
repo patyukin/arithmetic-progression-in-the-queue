@@ -22,15 +22,18 @@ func New(c calculator.CalcInterface) *Handler {
 	}
 }
 
-func (h *Handler) SetArithmeticProgressionData(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) SetArithmeticProgressionData(_ http.ResponseWriter, r *http.Request) {
 	reqBody, err := io.ReadAll(r.Body)
 	if err != nil {
 		return
 	}
 
-	h.c.SetProgression(reqBody)
+	err = h.c.SetProgression(reqBody)
+	if err != nil {
+		return
+	}
 }
 
-func (h *Handler) GetArithmeticProgressionInfo(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) GetArithmeticProgressionInfo(_ http.ResponseWriter, _ *http.Request) {
 	//h.c.GetProgression()
 }

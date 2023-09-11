@@ -21,7 +21,6 @@ type Progression struct {
 
 type Store interface {
 	Set(k string, v Progression) error
-	SetByParams(k string, v Progression) error
 	Get(k string) (Progression, error)
 	Delete(k string)
 	Loop(k string)

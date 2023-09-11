@@ -15,11 +15,6 @@ type Memory struct {
 	seq map[string]store.Progression
 }
 
-func (m *Memory) SetByParams(k string, v store.Progression) error {
-	//TODO implement me
-	panic("implement me")
-}
-
 func New(seq map[string]store.Progression) *Memory {
 	return &Memory{
 		seq: seq,

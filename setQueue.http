@@ -1,0 +1,11 @@
+### Send POST request with json body
+POST http://localhost:1234/set
+Content-Type: application/json
+
+{
+  "n": 10000,
+  "d": 1,
+  "nl": 103,
+  "I": 2,
+  "TTL": 1000000
+}

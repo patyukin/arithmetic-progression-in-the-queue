@@ -1,0 +1,501 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw-jetbrains-plugin",
+  "elements": [
+    {
+      "id": "fU17q44hQPnDjx5I7IcWQ",
+      "type": "rectangle",
+      "x": 652,
+      "y": 342,
+      "width": 229,
+      "height": 125,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": {
+        "type": 3
+      },
+      "seed": 1303608740,
+      "version": 287,
+      "versionNonce": 467284516,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "mocC1oCLv-mh-G6RALiZ2"
+        },
+        {
+          "id": "KIztRxUhCY7mht4P8fI8O",
+          "type": "arrow"
+        },
+        {
+          "id": "5WksCuzYz9DkLSSc2Xt6B",
+          "type": "arrow"
+        },
+        {
+          "id": "CZMqpkDGSSU4QOOh8MZpu",
+          "type": "arrow"
+        },
+        {
+          "id": "8ixPTxlA_1b3AIR7wwvD8",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1694241513119,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "mocC1oCLv-mh-G6RALiZ2",
+      "type": "text",
+      "x": 699.0539703369141,
+      "y": 359.5,
+      "width": 134.89205932617188,
+      "height": 90,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": null,
+      "seed": 1909101988,
+      "version": 223,
+      "versionNonce": 2073449372,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1694240962871,
+      "link": null,
+      "locked": false,
+      "text": "backend\ngolang",
+      "fontSize": 36,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "baseline": 77,
+      "containerId": "fU17q44hQPnDjx5I7IcWQ",
+      "originalText": "backend\ngolang",
+      "lineHeight": 1.25
+    },
+    {
+      "id": "1g0dTdotpz6_BScBd7syV",
+      "type": "rectangle",
+      "x": 635,
+      "y": 703,
+      "width": 187,
+      "height": 94,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": {
+        "type": 3
+      },
+      "seed": 1241101340,
+      "version": 292,
+      "versionNonce": 321392164,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "dB3Cgi2UgGKZ1Zo7WouoI"
+        },
+        {
+          "id": "5WksCuzYz9DkLSSc2Xt6B",
+          "type": "arrow"
+        },
+        {
+          "id": "8ixPTxlA_1b3AIR7wwvD8",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1694245694337,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "dB3Cgi2UgGKZ1Zo7WouoI",
+      "type": "text",
+      "x": 678.2079772949219,
+      "y": 727.5,
+      "width": 100.58404541015625,
+      "height": 45,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": null,
+      "seed": 930369436,
+      "version": 284,
+      "versionNonce": 1456122276,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1694245694337,
+      "link": null,
+      "locked": false,
+      "text": "kafka",
+      "fontSize": 36,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "baseline": 32,
+      "containerId": "1g0dTdotpz6_BScBd7syV",
+      "originalText": "kafka",
+      "lineHeight": 1.25
+    },
+    {
+      "id": "KIztRxUhCY7mht4P8fI8O",
+      "type": "arrow",
+      "x": 419.7612844401731,
+      "y": 376.844542746388,
+      "width": 209.23871555982691,
+      "height": 11.737783192537222,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": {
+        "type": 2
+      },
+      "seed": 1009955492,
+      "version": 375,
+      "versionNonce": 474324644,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1694241360959,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          209.23871555982691,
+          11.737783192537222
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "uE6yqkrAga8AuU7WiT3lp",
+        "focus": -0.09821756703084591,
+        "gap": 15.46498927415746
+      },
+      "endBinding": {
+        "elementId": "fU17q44hQPnDjx5I7IcWQ",
+        "focus": 0.11903483535177983,
+        "gap": 23
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow"
+    },
+    {
+      "id": "5WksCuzYz9DkLSSc2Xt6B",
+      "type": "arrow",
+      "x": 712.8995188063453,
+      "y": 487.0000000000001,
+      "width": 7.4853571152460745,
+      "height": 195.9999999999999,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": {
+        "type": 2
+      },
+      "seed": 1526540572,
+      "version": 369,
+      "versionNonce": 1407160484,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1694245694337,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -7.4853571152460745,
+          195.9999999999999
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "fU17q44hQPnDjx5I7IcWQ",
+        "focus": 0.4393560921454343,
+        "gap": 20
+      },
+      "endBinding": {
+        "elementId": "1g0dTdotpz6_BScBd7syV",
+        "focus": -0.26910771418414503,
+        "gap": 20
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow"
+    },
+    {
+      "type": "arrow",
+      "version": 259,
+      "versionNonce": 603153052,
+      "isDeleted": false,
+      "id": "CZMqpkDGSSU4QOOh8MZpu",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "angle": 0,
+      "x": 328.14969321395745,
+      "y": 449.58779267807125,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "width": 299.6199054533662,
+      "height": 8.89892736538161,
+      "seed": 2002158748,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": {
+        "type": 2
+      },
+      "boundElements": [],
+      "updated": 1694241362910,
+      "link": null,
+      "locked": false,
+      "startBinding": {
+        "elementId": "y48f8Ti8rZQ6-RKlSQnaj",
+        "focus": -1.1687357881488314,
+        "gap": 8.412207321928747
+      },
+      "endBinding": {
+        "elementId": "fU17q44hQPnDjx5I7IcWQ",
+        "focus": -0.48661784216536597,
+        "gap": 24.230401332676365
+      },
+      "lastCommittedPoint": null,
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          299.6199054533662,
+          -8.89892736538161
+        ]
+      ]
+    },
+    {
+      "id": "uE6yqkrAga8AuU7WiT3lp",
+      "type": "text",
+      "x": 263,
+      "y": 354.5,
+      "width": 141.29629516601562,
+      "height": 40,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": null,
+      "seed": 1273802532,
+      "version": 85,
+      "versionNonce": 2143041444,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "id": "KIztRxUhCY7mht4P8fI8O",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1694241360959,
+      "link": null,
+      "locked": false,
+      "text": "Поставить задачу\nв очередь.",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "baseline": 34,
+      "containerId": null,
+      "originalText": "Поставить задачу\nв очередь.",
+      "lineHeight": 1.25
+    },
+    {
+      "id": "y48f8Ti8rZQ6-RKlSQnaj",
+      "type": "text",
+      "x": 185,
+      "y": 458,
+      "width": 320.1925964355469,
+      "height": 40,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": null,
+      "seed": 2069414436,
+      "version": 130,
+      "versionNonce": 418388380,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "id": "CZMqpkDGSSU4QOOh8MZpu",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1694241362909,
+      "link": null,
+      "locked": false,
+      "text": "Получить отсортированный список задач\nи статусы выполнения этих задач",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "baseline": 34,
+      "containerId": null,
+      "originalText": "Получить отсортированный список задач\nи статусы выполнения этих задач",
+      "lineHeight": 1.25
+    },
+    {
+      "id": "m5857CpHxwd8_r28UKCDk",
+      "type": "text",
+      "x": 970.645142871809,
+      "y": 319.8547501749329,
+      "width": 707,
+      "height": 780,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": null,
+      "seed": 1985932964,
+      "version": 255,
+      "versionNonce": 1772092315,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1694245876075,
+      "link": null,
+      "locked": false,
+      "text": "Написать сервис, который считает арифметическую прогрессию в очереди.\nЗадачи поступают в очередь, из очереди поступют на выполнение,\nвыполняются до получения результата, после чего из очереди выбирается следующая задача.\nПараллельно может выполняться N задач.\n\nПоставить задачу в очередь. \n\nПараметры:\nn - количество элементов (целочисленное)\nd - дельта между элементами последовательности (вещественное)\nn1 - Стартовое значение (вещественное)\nI - интервал в секундах между итерациями (вещественное)\nTTL - время хранения результата в секундах (вещественное)\n\nПолучить отсортированный список задач и \nстатусы выполнения этих задач. \n\nПоля результата для каждой задачи:\n- Номер в очереди (целочисленное)\n- Статус: В процессе/В очереди/Завершена\n- n\n- d\n- n1\n- I\n- TTL\n- Текущая итерация\n- Время постановки задачи\n- Время старта задачи\n- Время окончания задачи (в случае если задача завершена)\n\nТребования к реализации\n\n- Отработанные задачи стирать после завершения TTL;\n- В качестве хранения данных использовать память;\n- Вычисление текущего значения должно высчитываться \nот предыдущего значения по факту наступления времени (по интервалу),\nа не по формуле разницы времени и количеству итераций;\n- Параллельно может выполняться только N задач. Количество N передается\nчерез параметры командной строки сервиса.",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "baseline": 774,
+      "containerId": null,
+      "originalText": "Написать сервис, который считает арифметическую прогрессию в очереди.\nЗадачи поступают в очередь, из очереди поступют на выполнение,\nвыполняются до получения результата, после чего из очереди выбирается следующая задача.\nПараллельно может выполняться N задач.\n\nПоставить задачу в очередь. \n\nПараметры:\nn - количество элементов (целочисленное)\nd - дельта между элементами последовательности (вещественное)\nn1 - Стартовое значение (вещественное)\nI - интервал в секундах между итерациями (вещественное)\nTTL - время хранения результата в секундах (вещественное)\n\nПолучить отсортированный список задач и \nстатусы выполнения этих задач. \n\nПоля результата для каждой задачи:\n- Номер в очереди (целочисленное)\n- Статус: В процессе/В очереди/Завершена\n- n\n- d\n- n1\n- I\n- TTL\n- Текущая итерация\n- Время постановки задачи\n- Время старта задачи\n- Время окончания задачи (в случае если задача завершена)\n\nТребования к реализации\n\n- Отработанные задачи стирать после завершения TTL;\n- В качестве хранения данных использовать память;\n- Вычисление текущего значения должно высчитываться \nот предыдущего значения по факту наступления времени (по интервалу),\nа не по формуле разницы времени и количеству итераций;\n- Параллельно может выполняться только N задач. Количество N передается\nчерез параметры командной строки сервиса.",
+      "lineHeight": 1.25
+    },
+    {
+      "id": "8ixPTxlA_1b3AIR7wwvD8",
+      "type": "arrow",
+      "x": 772.7471240775862,
+      "y": 684,
+      "width": 17.399545089712205,
+      "height": 200.9999999999999,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": {
+        "type": 2
+      },
+      "seed": 377072668,
+      "version": 175,
+      "versionNonce": 2537380,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1694245694337,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          17.399545089712205,
+          -200.9999999999999
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "1g0dTdotpz6_BScBd7syV",
+        "focus": 0.3935003915426782,
+        "gap": 19
+      },
+      "endBinding": {
+        "elementId": "fU17q44hQPnDjx5I7IcWQ",
+        "focus": -0.25387320596901436,
+        "gap": 16
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow"
+    }
+  ],
+  "appState": {
+    "gridSize": null,
+    "viewBackgroundColor": "#ffffff"
+  }
+}

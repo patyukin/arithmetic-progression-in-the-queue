@@ -3,9 +3,9 @@ POST http://localhost:1234/set
 Content-Type: application/json
 
 {
-  "n": 10000,
+  "n": 60,
   "d": 1,
   "nl": 103,
-  "I": 2,
+  "I": 1,
   "TTL": 1000000
 }

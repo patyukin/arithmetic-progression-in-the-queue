@@ -38,10 +38,7 @@ func run() error {
 		cfg.N = 1
 	}
 
-	for i := 0; i < cfg.N; i++ {
-		go calc.ConsumeQueue()
-	}
-
+	go calc.ConsumeQueue()
 	go calc.ClearProgression()
 
 	h := handler.New(calc)

@@ -7,6 +7,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/patyukin/arithmetic-progression-in-the-queue/internal/pkg/queue"
 	"github.com/patyukin/arithmetic-progression-in-the-queue/internal/pkg/store"
+	"github.com/patyukin/arithmetic-progression-in-the-queue/pkg/config"
 	"github.com/patyukin/arithmetic-progression-in-the-queue/pkg/logger"
 	"github.com/pkg/errors"
 )
@@ -32,7 +33,7 @@ type Calculator struct {
 
 var QueueNumber int
 
-func New(q queue.Queue, s store.Store) *Calculator {
+func New(q queue.Queue, s store.Store) CalcInterface {
 	return &Calculator{
 		q: q,
 		s: s,
@@ -70,9 +71,12 @@ func (c *Calculator) SetProgression(body []byte) error {
 	}
 
 	err = c.q.Publish([]byte(id))
+
 	if err != nil {
 		return errors.Wrap(err, "failed Publish in Calculator.SetProgression")
 	}
+
+	logger.Get().Info().Msg("Publish message")
 
 	return nil
 }
@@ -85,17 +89,19 @@ func (c *Calculator) ConsumeQueue() error {
 
 	var forever chan struct{}
 
-	go func() {
-		for d := range msgs {
-			logger.Get().Info().Msgf("Received a message: %s", d.Body)
-			progression, _ := c.s.Get(string(d.Body))
-			progression.Status = "В работе"
-			c.s.Set(string(d.Body), progression)
-			go c.s.Loop(string(d.Body))
-		}
-	}()
-
 	logger.Get().Info().Msg(" [*] Waiting for messages. To exit press CTRL+C")
+	for i := 0; i < config.Get().N; i++ {
+		go func() {
+			for d := range msgs {
+				logger.Get().Info().Msgf("Received a message: %s", d.Body)
+				progression, _ := c.s.Get(string(d.Body))
+				progression.Status = "В работе"
+				c.s.Set(string(d.Body), progression)
+				c.s.Loop(string(d.Body))
+			}
+		}()
+	}
+
 	<-forever
 
 	return nil

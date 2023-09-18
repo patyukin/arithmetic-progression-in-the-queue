@@ -54,7 +54,7 @@ func (c *Calculator) SetProgression(body []byte) error {
 	}
 
 	QueueNumber += 1
-	err = c.s.Set(id, store.Progression{
+	c.s.Set(id, store.Progression{
 		TTL:              30000,
 		Status:           "В очереди",
 		QueueNumber:      QueueNumber,
@@ -65,10 +65,6 @@ func (c *Calculator) SetProgression(body []byte) error {
 		CurrentIteration: 0,
 		TaskSetUpTime:    time.Now(),
 	})
-
-	if err != nil {
-		return errors.Wrap(err, "failed store.Store.SetProgression in Calculator.SetProgression")
-	}
 
 	err = c.q.Publish([]byte(id))
 

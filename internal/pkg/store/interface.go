@@ -20,7 +20,7 @@ type Progression struct {
 }
 
 type Store interface {
-	Set(k string, v Progression) error
+	Set(k string, v Progression)
 	Get(k string) (Progression, error)
 	Delete(k string)
 	Loop(k string)

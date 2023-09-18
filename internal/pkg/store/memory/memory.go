@@ -43,7 +43,7 @@ func (m *Memory) Exists(k string) bool {
 	return true
 }
 
-func (m *Memory) Set(k string, v store.Progression) error {
+func (m *Memory) Set(k string, v store.Progression) {
 	m.mx.Lock()
 	defer m.mx.Unlock()
 	if v.Status == "Завершена" {
@@ -53,12 +53,9 @@ func (m *Memory) Set(k string, v store.Progression) error {
 		if finishTime.Sub(now) > 0 {
 			delete(m.seq, k)
 		}
-
-		return nil
 	}
 
 	m.seq[k] = v
-	return nil
 }
 
 func (m *Memory) Get(k string) (store.Progression, error) {

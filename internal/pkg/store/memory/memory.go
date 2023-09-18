@@ -2,6 +2,7 @@ package memory
 
 import (
 	"fmt"
+	"sort"
 	"sync"
 	"time"
 
@@ -76,6 +77,35 @@ func (m *Memory) Get(k string) (store.Progression, error) {
 	}
 
 	return v, nil
+}
+
+func (m *Memory) GetAll() ([]store.Progression, error) {
+	m.mx.Lock()
+	progressions := make([]store.Progression, 0, len(m.seq))
+	for _, v := range m.seq {
+		progressions = append(progressions, store.Progression{
+			TTL:              v.TTL,
+			Status:           v.Status,
+			QueueNumber:      v.QueueNumber,
+			N:                v.N,
+			Nl:               v.Nl,
+			I:                v.I,
+			D:                v.D,
+			CurrentIteration: v.CurrentIteration,
+			Progression:      v.Progression,
+			TaskSetUpTime:    v.TaskSetUpTime,
+			TaskStartTime:    v.TaskStartTime,
+			TaskFinishTIme:   v.TaskFinishTIme,
+		})
+	}
+
+	m.mx.Unlock()
+
+	sort.SliceStable(progressions, func(i, j int) bool {
+		return progressions[i].QueueNumber < progressions[j].QueueNumber
+	})
+
+	return progressions, nil
 }
 
 func (m *Memory) Delete(k string) {

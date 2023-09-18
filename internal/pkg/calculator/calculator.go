@@ -22,6 +22,7 @@ type Params struct {
 
 type CalcInterface interface {
 	SetProgression(body []byte) error
+	GetProgression() ([]store.Progression, error)
 	ClearProgression()
 	ConsumeQueue() error
 }
@@ -91,7 +92,7 @@ func (c *Calculator) ConsumeQueue() error {
 			for d := range msgs {
 				logger.Get().Info().Msgf("Received a message: %s", d.Body)
 				progression, _ := c.s.Get(string(d.Body))
-				progression.Status = "В работе"
+				progression.Status = "В процессе"
 				c.s.Set(string(d.Body), progression)
 				c.s.Loop(string(d.Body))
 			}
@@ -105,4 +106,8 @@ func (c *Calculator) ConsumeQueue() error {
 
 func (c *Calculator) ClearProgression() {
 	c.s.ClearTTL()
+}
+
+func (c *Calculator) GetProgression() ([]store.Progression, error) {
+	return c.s.GetAll()
 }

@@ -9,3 +9,8 @@ Content-Type: application/json
   "I": 1,
   "TTL": 1000000
 }
+
+
+### GET request with a header
+GET http://localhost:1234/get
+Accept: application/json

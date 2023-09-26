@@ -6,61 +6,80 @@ import (
 	"time"
 
 	"github.com/patyukin/arithmetic-progression-in-the-queue/internal/pkg/store"
+	"github.com/patyukin/arithmetic-progression-in-the-queue/pkg/config"
+	"github.com/patyukin/arithmetic-progression-in-the-queue/pkg/logger"
 )
 
 var _ store.Store = &Memory{}
 
 type Memory struct {
 	mx  sync.Mutex
-	seq map[string]store.Progression
+	s   []store.Progression
+	cfg *config.Config
+	l   *logger.Logger
 }
 
-func New(seq map[string]store.Progression) *Memory {
+func New(s []store.Progression, cfg *config.Config, l *logger.Logger) *Memory {
 	return &Memory{
-		seq: seq,
+		s:   s,
+		cfg: cfg,
+		l:   l,
 	}
 }
 
-func (m *Memory) Exists(k string) bool {
+func (m *Memory) Exists(k int) bool {
 	m.mx.Lock()
 	defer m.mx.Unlock()
 
-	if _, ok := m.seq[k]; ok {
-		return true
+	for _, v := range m.s {
+		if k == v.QueueNumber {
+			return true
+		}
 	}
 
 	return false
 }
 
-func (m *Memory) Set(k string, v store.Progression) error {
+func (m *Memory) Add(v store.Progression) error {
 	m.mx.Lock()
 	defer m.mx.Unlock()
 
-	m.seq[k] = v
+	m.s = append(m.s, v)
 	return nil
 }
 
-func (m *Memory) Get(k string) (store.Progression, error) {
+func (m *Memory) Get(k int) (store.Progression, error) {
 	m.mx.Lock()
 	defer m.mx.Unlock()
-	v, ok := m.seq[k]
-	if !ok {
-		return store.Progression{}, fmt.Errorf("failed to find key: %s", k)
+
+	for _, v := range m.s {
+		if k == v.QueueNumber {
+			return v, nil
+		}
 	}
 
-	return v, nil
+	return store.Progression{}, fmt.Errorf("failed to find key: %d", k)
 }
 
-func (m *Memory) Delete(k string) {
+func (m *Memory) Delete(k int) error {
 	m.mx.Lock()
 	defer m.mx.Unlock()
-	delete(m.seq, k)
+	var idx int
+	for i, v := range m.s {
+		if k == v.QueueNumber {
+			idx = i
+		}
+	}
+
+	m.s = append(m.s[:idx], m.s[idx+1:]...)
+
+	return nil
 }
 
 func (m *Memory) ClearTTL() {
 	for {
 		m.mx.Lock()
-		for k, v := range m.seq {
+		for k, v := range m.s {
 			if v.Status != "Завершена" {
 				continue
 			}
@@ -69,7 +88,7 @@ func (m *Memory) ClearTTL() {
 			finishTime := v.TaskSetUpTime.Add(time.Duration(int(v.TTL)) * time.Second)
 
 			if finishTime.Sub(now) > 0 {
-				delete(m.seq, k)
+				delete(m.s, k)
 			}
 		}
 
@@ -80,15 +99,15 @@ func (m *Memory) ClearTTL() {
 func (m *Memory) Loop(k string) {
 	m.mx.Lock()
 	defer m.mx.Unlock()
-	current := m.seq[k]
+	current := m.s[k]
 	current.Progression = current.Nl
 	for i := 0; i < current.N; i++ {
 		current.CurrentIteration++
 		current.Progression += current.D
-		m.seq[k] = current
+		m.s[k] = current
 		time.Sleep(time.Duration(current.I) * time.Second)
 	}
 
 	current.Status = "Завершен"
-	m.seq[k] = current
+	m.s[k] = current
 }

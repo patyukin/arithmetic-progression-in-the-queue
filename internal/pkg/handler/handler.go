@@ -1,16 +1,12 @@
 package handler
 
 import (
+	"encoding/json"
 	"io"
 	"net/http"
 
 	"github.com/patyukin/arithmetic-progression-in-the-queue/internal/pkg/calculator"
 )
-
-type Interface interface {
-	SetArithmeticProgressionData(w http.ResponseWriter, r *http.Request)
-	GetArithmeticProgressionInfo(w http.ResponseWriter, r *http.Request)
-}
 
 type Handler struct {
 	c calculator.CalcInterface
@@ -28,7 +24,13 @@ func (h *Handler) SetArithmeticProgressionData(_ http.ResponseWriter, r *http.Re
 		return
 	}
 
-	err = h.c.SetProgression(reqBody)
+	var params calculator.Params
+	err = json.Unmarshal(reqBody, &params)
+	if err != nil {
+		return
+	}
+
+	err = h.c.SetProgression(params)
 	if err != nil {
 		return
 	}

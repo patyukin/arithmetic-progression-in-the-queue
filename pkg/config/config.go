@@ -2,7 +2,6 @@ package config
 
 import (
 	"log"
-	"sync"
 
 	"github.com/caarlos0/env/v9"
 	"github.com/joho/godotenv"
@@ -23,22 +22,16 @@ type Config struct {
 	N int `env:"CONSUMER_NUMBER" envDefault:"1"`
 }
 
-var (
-	config Config
-	once   sync.Once
-)
+func Init() *Config {
+	config := Config{}
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatal(err)
+	}
 
-func Get() *Config {
-	once.Do(func() {
-		err := godotenv.Load(".env")
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		if err = env.Parse(&config); err != nil {
-			log.Fatal(err)
-		}
-	})
+	if err = env.Parse(&config); err != nil {
+		log.Fatal(err)
+	}
 
 	return &config
 }

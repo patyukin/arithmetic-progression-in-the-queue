@@ -1,21 +1,22 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
+	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/patyukin/arithmetic-progression-in-the-queue/internal/pkg/calculator"
 	"github.com/patyukin/arithmetic-progression-in-the-queue/internal/pkg/handler"
-	"github.com/patyukin/arithmetic-progression-in-the-queue/internal/pkg/queue/rabbitmq"
 	"github.com/patyukin/arithmetic-progression-in-the-queue/internal/pkg/store"
 	"github.com/patyukin/arithmetic-progression-in-the-queue/internal/pkg/store/memory"
 	"github.com/patyukin/arithmetic-progression-in-the-queue/pkg/config"
 	"github.com/patyukin/arithmetic-progression-in-the-queue/pkg/logger"
-	"github.com/pkg/errors"
 )
 
 func main() {
@@ -25,23 +26,20 @@ func main() {
 }
 
 func run() error {
-	rabbit, err := rabbitmq.New()
-	if err != nil {
-		return errors.Wrap(err, "failed rabbit MQ initial")
-	}
+	ctx, cancel := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+	defer cancel()
 
-	m := make(map[string]store.Progression)
-	s := memory.New(m)
-	calc := calculator.New(rabbit, s)
-	cfg := config.Get()
+	cfg := config.Init()
+	l := logger.Init(cfg)
+
+	var sl []store.Progression
+	s := memory.New(sl, cfg, l)
+	calc := calculator.New(s, cfg, l)
 	if cfg.N <= 0 {
 		cfg.N = 1
 	}
 
-	for i := 0; i < cfg.N; i++ {
-		go calc.ConsumeQueue()
-	}
-
+	go calc.ConsumeQueue()
 	go calc.ClearProgression()
 
 	h := handler.New(calc)
@@ -55,23 +53,32 @@ func run() error {
 	r.Get("/get", h.GetArithmeticProgressionInfo)
 	r.Mount("/debug", middleware.Profiler())
 
-	serve(r)
+	serve(ctx, r, cfg)
 
 	return nil
 }
 
-func serve(r http.Handler) {
-	cfg := config.Get()
-	server := &http.Server{
-		Addr:           fmt.Sprintf("%s:%d", cfg.Server.Host, cfg.Server.Port),
-		ReadTimeout:    10 * time.Second,
-		WriteTimeout:   10 * time.Second,
-		MaxHeaderBytes: 1 << 20,
-		Handler:        r,
-	}
+func serve(ctx context.Context, r http.Handler, cfg *config.Config) {
+	go func() {
+		addr := fmt.Sprintf("%s:%d", cfg.Server.Host, cfg.Server.Port)
+		server := &http.Server{
+			Addr:           addr,
+			ReadTimeout:    10 * time.Second,
+			WriteTimeout:   10 * time.Second,
+			MaxHeaderBytes: 1 << 20,
+			Handler:        r,
+		}
 
-	err := server.ListenAndServe()
-	if err != nil {
-		logger.Get().Fatal().Err(err)
-	}
+		err := server.ListenAndServe()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
+
+	ctx.Done()
+	closeDeps()
+}
+
+func closeDeps() {
+
 }

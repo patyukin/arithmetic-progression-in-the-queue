@@ -17,13 +17,14 @@ type Progression struct {
 	TaskSetUpTime    time.Time
 	TaskStartTime    time.Time
 	TaskFinishTIme   time.Time // В случае если задача завершена
+	Ack              bool
 }
 
 type Store interface {
-	Set(k string, v Progression) error
-	Get(k string) (Progression, error)
-	Delete(k string)
+	Add(v Progression) error
+	Get(k int) (Progression, error)
+	Delete(k int) error
 	Loop(k string)
 	ClearTTL()
-	Exists(k string) bool
+	Exists(k int) bool
 }

@@ -7,7 +7,7 @@ import (
 type Progression struct {
 	TTL              float64
 	Status           string
-	QueueNumber      int
+	QueueNumber      int32
 	N                int
 	Nl               float64
 	I                float64
@@ -22,9 +22,7 @@ type Progression struct {
 
 type Store interface {
 	Add(v Progression) error
-	Get(k int) (Progression, error)
-	Delete(k int) error
-	Loop(k string)
-	ClearTTL()
-	Exists(k int) bool
+	Set(k int32, s Progression) error
+	GetOneForQueue() (Progression, error)
+	GetAll() ([]Progression, error)
 }

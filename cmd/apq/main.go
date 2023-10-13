@@ -33,14 +33,13 @@ func run() error {
 	l := logger.Init(cfg)
 
 	var sl []store.Progression
-	s := memory.New(sl, cfg, l)
+	s := memory.New(ctx, sl, cfg, l)
 	calc := calculator.New(s, cfg, l)
 	if cfg.N <= 0 {
 		cfg.N = 1
 	}
 
 	go calc.ConsumeQueue()
-	go calc.ClearProgression()
 
 	h := handler.New(calc)
 
@@ -54,6 +53,9 @@ func run() error {
 	r.Mount("/debug", middleware.Profiler())
 
 	serve(ctx, r, cfg)
+
+	<-ctx.Done()
+	closeDeps()
 
 	return nil
 }
@@ -74,9 +76,6 @@ func serve(ctx context.Context, r http.Handler, cfg *config.Config) {
 			log.Fatal(err)
 		}
 	}()
-
-	ctx.Done()
-	closeDeps()
 }
 
 func closeDeps() {

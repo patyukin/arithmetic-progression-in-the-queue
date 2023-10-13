@@ -9,3 +9,8 @@ Content-Type: application/json
   "I": 2,
   "TTL": 1000000
 }
+
+
+### Send GET request
+GET http://localhost:1234/get
+Content-Type: application/json

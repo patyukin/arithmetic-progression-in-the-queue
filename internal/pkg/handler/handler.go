@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 
@@ -36,6 +37,21 @@ func (h *Handler) SetArithmeticProgressionData(_ http.ResponseWriter, r *http.Re
 	}
 }
 
-func (h *Handler) GetArithmeticProgressionInfo(_ http.ResponseWriter, _ *http.Request) {
-	//h.c.GetProgression()
+func (h *Handler) GetArithmeticProgressionInfo(w http.ResponseWriter, _ *http.Request) {
+	p, err := h.c.GetProgression()
+	if err != nil {
+		fmt.Printf("Ошибка с получением вписка последовательности: %v\n", err)
+		return
+	}
+
+	res, err := json.Marshal(p)
+	if err != nil {
+		fmt.Println("Ошибка при конвертации в JSON:", err)
+		return
+	}
+
+	_, err = w.Write(res)
+	if err != nil {
+		return
+	}
 }

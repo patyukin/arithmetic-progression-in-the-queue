@@ -1,7 +1,7 @@
 package calculator
 
 import (
-	"context"
+	"sync/atomic"
 	"time"
 
 	"github.com/patyukin/arithmetic-progression-in-the-queue/internal/pkg/store"
@@ -11,9 +11,9 @@ import (
 )
 
 const (
-	IN_PROCESS = "В процессе"
-	IN_QUEUE   = "В очереди"
-	COMPLETED  = "Завершена"
+	InProcess = "В процессе"
+	InQueue   = "В очереди"
+	Completed = "Завершена"
 )
 
 type Params struct {
@@ -26,8 +26,8 @@ type Params struct {
 
 type CalcInterface interface {
 	SetProgression(params Params) error
-	ClearProgression()
-	ConsumeQueue(ctx context.Context) error
+	ConsumeQueue() error
+	GetProgression() ([]store.Progression, error)
 }
 
 type Calculator struct {
@@ -36,7 +36,7 @@ type Calculator struct {
 	l   *logger.Logger
 }
 
-var QueueNumber int
+var QueueNumber int32
 
 func New(s store.Store, cfg *config.Config, l *logger.Logger) *Calculator {
 	return &Calculator{
@@ -47,10 +47,10 @@ func New(s store.Store, cfg *config.Config, l *logger.Logger) *Calculator {
 }
 
 func (c *Calculator) SetProgression(params Params) error {
-	QueueNumber += 1
+	atomic.AddInt32(&QueueNumber, 1)
 	err := c.s.Add(store.Progression{
 		TTL:              30000,
-		Status:           IN_QUEUE,
+		Status:           InQueue,
 		QueueNumber:      QueueNumber,
 		N:                params.N,
 		Nl:               params.Nl,
@@ -67,24 +67,29 @@ func (c *Calculator) SetProgression(params Params) error {
 	return nil
 }
 
-func (c *Calculator) ConsumeQueue(ctx context.Context) error {
-	for {
-		select {
-		case <-ctx.Done():
-			return nil
-		default:
-			for i := 0; i < c.cfg.N; i++ {
-				go func() {
-					progression, _ := c.s.Get(string(d.Body))
-					progression.Status = IN_PROCESS
-					c.s.Add(string(d.Body), progression)
-					go c.s.Loop(string(d.Body))
-				}()
+func (c *Calculator) ConsumeQueue() error {
+	for i := 0; i < c.cfg.N; i++ {
+		go func() {
+			current, _ := c.s.GetOneForQueue()
+
+			for i := 0; i < current.N; i++ {
+				current.CurrentIteration++
+				current.Progression += current.D
+				time.Sleep(time.Duration(current.I) * time.Second)
 			}
-		}
+
+			current.Status = Completed
+
+			err := c.s.Set(current.QueueNumber, current)
+			if err != nil {
+				c.l.Error().Msgf("filed to set slice: %v", err)
+			}
+		}()
 	}
+
+	return nil
 }
 
-func (c *Calculator) ClearProgression() {
-	c.s.ClearTTL()
+func (c *Calculator) GetProgression() ([]store.Progression, error) {
+	return c.s.GetAll()
 }

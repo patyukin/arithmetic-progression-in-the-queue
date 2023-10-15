@@ -36,19 +36,21 @@ func New(ctx context.Context, s []store.Progression, cfg *config.Config, l *logg
 }
 
 func (m *Memory) Add(v store.Progression) error {
+	m.mx.Lock()
+	defer m.mx.Unlock()
 	m.s = append(m.s, v)
 	return nil
 }
 
 func (m *Memory) GetOneForQueue() (store.Progression, error) {
 	m.mx.Lock()
+	defer m.mx.Unlock()
 	if len(m.s) <= m.firstInQueue {
 		return store.Progression{}, fmt.Errorf("queue not found")
 	}
 	m.s[m.firstInQueue].Status = calculator.InProcess
 	result := m.s[m.firstInQueue]
 	m.firstInQueue++
-	defer m.mx.Unlock()
 
 	return result, nil
 }
@@ -63,7 +65,9 @@ func (m *Memory) Set(k int32, s store.Progression) error {
 		}
 	}
 
-	m.s[idx] = s
+	if len(m.s) > idx {
+		m.s[idx] = s
+	}
 
 	return nil
 }

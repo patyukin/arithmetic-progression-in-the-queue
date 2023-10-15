@@ -39,7 +39,12 @@ func run() error {
 		cfg.N = 1
 	}
 
-	go calc.ConsumeQueue()
+	go func() {
+		err := calc.ConsumeQueue()
+		if err != nil {
+			l.Error().Msgf("failed to consume queue, error: %v", err)
+		}
+	}()
 
 	h := handler.New(calc)
 
@@ -49,10 +54,11 @@ func run() error {
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Post("/set", h.SetArithmeticProgressionData)
+	//r.Get("/get", http.TimeoutHandler(http.HandlerFunc(h.GetArithmeticProgressionInfo), 3*time.Second, "timeout error").ServeHTTP)
 	r.Get("/get", h.GetArithmeticProgressionInfo)
 	r.Mount("/debug", middleware.Profiler())
 
-	serve(ctx, r, cfg)
+	serve(r, cfg)
 
 	<-ctx.Done()
 	closeDeps()
@@ -60,7 +66,7 @@ func run() error {
 	return nil
 }
 
-func serve(ctx context.Context, r http.Handler, cfg *config.Config) {
+func serve(r http.Handler, cfg *config.Config) {
 	go func() {
 		addr := fmt.Sprintf("%s:%d", cfg.Server.Host, cfg.Server.Port)
 		server := &http.Server{

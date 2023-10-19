@@ -38,10 +38,12 @@ func run() error {
 		cfg.N = 1
 	}
 
-	for i := 0; i < cfg.N; i++ {
-		go calc.ConsumeQueue()
-	}
-
+	go func() {
+		err = calc.ConsumeQueue()
+		if err != nil {
+			log.Fatalf("consumer error: %v", err)
+		}
+	}()
 	go calc.ClearProgression()
 
 	h := handler.New(calc)

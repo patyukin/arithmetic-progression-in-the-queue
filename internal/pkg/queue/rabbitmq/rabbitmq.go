@@ -7,6 +7,7 @@ import (
 
 	"github.com/patyukin/arithmetic-progression-in-the-queue/internal/pkg/queue"
 	"github.com/patyukin/arithmetic-progression-in-the-queue/pkg/config"
+	"github.com/pkg/errors"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
@@ -16,6 +17,8 @@ var _ queue.Queue = &Client{}
 
 type Client struct {
 	conn *amqp.Connection
+	ch   *amqp.Channel
+	q    amqp.Queue
 }
 
 func New() (*Client, error) {
@@ -33,42 +36,52 @@ func New() (*Client, error) {
 		return nil, err
 	}
 
-	return &Client{conn: conn}, nil
+	ch, err := conn.Channel()
+
+	q, err := ch.QueueDeclare(QUEUE, false, false, false, false, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return &Client{conn: conn, ch: ch, q: q}, nil
 }
 
 func (c *Client) Publish(msgBody []byte) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	ch, err := c.conn.Channel()
-
-	q, err := ch.QueueDeclare(QUEUE, false, false, false, false, nil)
-	if err != nil {
-		return err
-	}
-
-	err = ch.PublishWithContext(
+	err := c.ch.PublishWithContext(
 		ctx,
 		"",
-		q.Name,
+		c.q.Name,
 		false,
 		false,
 		amqp.Publishing{
 			ContentType: "text/plain",
 			Body:        msgBody,
-		})
+		},
+	)
+
+	if err != nil {
+		return errors.Wrap(err, "failed from Publish(msgBody []byte)")
+	}
 
 	return nil
 }
 
 func (c *Client) Consume() (<-chan amqp.Delivery, error) {
-	ch, err := c.conn.Channel()
+	err := c.ch.Qos(
+		2,
+		0,
+		false,
+	)
+
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "failed from Consume() (<-chan amqp.Delivery, error)")
 	}
 
-	msgs, err := ch.Consume(
-		QUEUE,
+	msgs, err := c.ch.Consume(
+		c.q.Name,
 		"",
 		true,
 		false,
@@ -76,6 +89,7 @@ func (c *Client) Consume() (<-chan amqp.Delivery, error) {
 		false,
 		nil,
 	)
+
 	if err != nil {
 		return nil, err
 	}
